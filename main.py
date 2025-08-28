@@ -4,6 +4,8 @@ from flask import request
 from flask import redirect
 from flask import url_for
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import matplotlib.patches as patches
 #from views import *
 
 app = Flask(__name__)
@@ -18,29 +20,40 @@ def homepage():
 def processo():
     valorDoInput = request.form['numero']
 
-    circle = plt.Circle((int(valorDoInput), int(valorDoInput)), int(valorDoInput), fill=False)
 
-    # Create a figure and axis
-    fig, ax = plt.subplots()
 
-    # Add the circle to the axis
-    ax.add_patch(circle)
+    # Cria uma figura e um conjunto de eixos
+    fig, ax = plt.subplots(figsize=(6, 6))
 
-    # Get the center and radius of the circle
-    center = circle.center
-    radius = circle.radius
+    # Define os limites para os eixos x e y de 0 a 50
+    ax.set_xlim(0, 50)
+    ax.set_ylim(0, 50)
 
-    # Draw a line from the center to the edge to represent the radius
-    ax.plot([center[0], center[0] + radius], [center[1], center[1]], 'r--', lw=1)
+    # --- Adicionando o setor circular no primeiro quadrante ---
+    # O centro do setor será na origem (0,0) para que ele preencha o quadrante
+    center_x = 0
+    center_y = 0
 
-    # Add a text annotation for the radius value
-    ax.text(center[0] + radius/2, center[1], f'Raio: {radius} cm', ha='center', va='bottom', color='green')
+    # Raio do setor (tamanho suficiente para ser visível no gráfico)
+    radius = int(valorDoInput)
 
-    # Set axis limits and show the plot
-    #ax.set_xlim([0, int(valorDoInput)])
-    #ax.set_ylim([0, int(valorDoInput)])
+    # Define os ângulos para o primeiro quadrante (0 a 90 graus)
+    start_angle = 0
+    end_angle = 90
 
-    plt.axis('equal')  # To ensure the aspect ratio is maintained
+    # Cria o patch do setor circular
+    wedge = mpatches.Wedge((center_x, center_y), radius, start_angle, end_angle, color='lightgreen', alpha=0.8)
+
+    # Adiciona o setor circular aos eixos
+    ax.add_patch(wedge)
+
+    # Adiciona um título para clareza
+    ax.set_title("Eixos X e Y com Setor Circular no Primeiro Quadrante")
+    ax.set_xlabel("Eixo X")
+    ax.set_ylabel("Eixo Y")
+
+    # Garante que a proporção dos eixos seja igual para que o setor pareça circular
+    ax.set_aspect('equal', adjustable='box')
     plt.savefig(r'D:\Documentos\Estudos\Faculdade\Sétimo semestre\COMPUTAÇÃO GRÁFICA\PLOT CICLE\static\imagem\circulo.png')
   
 
