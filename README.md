@@ -1,5 +1,5 @@
 <h1>Plotando um semcicurlo no primeiro quadrante.</h1>
 
 
-![Texto alternativo para acessibilidade](static\imagem\circulo.png)
+![](D:\Documentos\Estudos\Faculdade\Sétimo semestre\COMPUTAÇÃO GRÁFICA\semicircle-first-quadrant\static\imagem\circulo.png)
 
